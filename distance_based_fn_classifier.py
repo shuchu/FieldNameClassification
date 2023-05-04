@@ -2,7 +2,7 @@
 
 
 from collections import defaultdict
-from typing import List, Dict, Set, DefaultDict
+from typing import DefaultDict, Dict, List, Set, Tuple
 
 from textdistance import DamerauLevenshtein
 
@@ -15,8 +15,8 @@ class DistanceFieldNameClassifier(FieldNameClassifier):
         self._kd = {}  # type: Dict[str, List[str]]
         # Use set() to avoid duplication in the value list of a key in knowledge dictionary.
         self._lookup_tbl = defaultdict(set)  # type: DefaultDict[str, Set]
-        self._dl_dist = DamerauLevenshtein() 
-        self._distance_tr = distance_tr  # distance threshold
+        self._dl_dist = DamerauLevenshtein()
+        self._distance_tr = distance_tr  # threshold of maximum edit distance
 
     def predict_field_type(self, field_name: str) -> List[str]:
         """Predict the field type of a given field name.
@@ -32,14 +32,14 @@ class DistanceFieldNameClassifier(FieldNameClassifier):
             return list(self._lookup_tbl[field_name])
         else:
             # do similarity search
-            top_fn = self._search_similar_field_names(field_name)
+            top_fn, _ = self._search_similar_field_names(field_name)
             res = set()
             for fn in top_fn:
                 for ft in self._lookup_tbl[fn]:
                     res.add(ft)
             return list(res)
 
-    def _search_similar_field_names(self, field_name: str) -> List[str]:
+    def _search_similar_field_names(self, field_name: str) -> Tuple[List[str], float]:
         # Search the most similar field names in knowledge dictionary.
         top_fn = []
         min_dist_nm = self._distance_tr
@@ -51,7 +51,7 @@ class DistanceFieldNameClassifier(FieldNameClassifier):
                 top_fn = [key]
             elif d_nm == min_dist_nm:
                 top_fn.append(key)
-        return top_fn
+        return top_fn, min_dist_nm
 
     def load_knowledge_dict(self, knowledge_dict: dict) -> None:
         """Load the (field type, field names) mapping. Create an inverse map from field name to field types."""

@@ -52,11 +52,12 @@ if __name__ == "__main__":
     res = defaultdict(dict)
     for field_name in query_field_names:
         fts = myclassifier.predict_field_type(field_name)
-        fns = myclassifier._search_similar_field_names(field_name)
+        fns, dist_score = myclassifier._search_similar_field_names(field_name)
         res[field_name]["field_types"] = fts
         res[field_name]["similar_names"] = fns
+        res[field_name]["normalized_distance"] = dist_score
 
     # save results
-    ofname = query_field_name_fname + ".fieldtype"
+    ofname = query_field_name_fname + ".json"
     with open(ofname, "w") as f:
         json.dump(res, f)
