@@ -1,0 +1,6 @@
+{"Domain": ["domain", "dest_domain", "destination_domain","d_domain", "src_domain", "source_domain", "s_domain","query.hostname"],
+"SourceIPv4Address": ["src_ip", "source_ip", "s_ip", "src_endpoint.ip", "device.ip"],
+"DestinationIPv4Address": ["dest_ip", "destination_ip", "d_ip", "dst_endpoint.ip"],
+"IPv4Address": ["src_ip", "source_ip", "s_ip", "src_endpoint.ip", "device.ip", "dest_ip", "destination_ip", "d_ip", "dst_endpoint.ip"],
+"ProcessName": ["process_name", "proc_name", "Image", "process.name","process.file.name"]
+}
