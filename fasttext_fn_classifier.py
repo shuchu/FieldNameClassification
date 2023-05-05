@@ -19,6 +19,10 @@ class FTClassifier(FieldNameClassifier):
         if not field_name:
             return []
 
+        if not self._model:
+            print("Error, the fasttext model is empty.")
+            return []
+
         tokens = self._tokenizer.extract_tokens(field_name)
         pred, prob = self._model.predict(" ".join(tokens))
 
@@ -36,10 +40,20 @@ class FTClassifier(FieldNameClassifier):
         pass
 
     def load_model(self, model_path: str) -> None:
-        self._model = fasttext.FastText.load_model(model_path)
+        try:
+            self._model = fasttext.FastText.load_model(model_path)
+        except Exception as e:
+            print(
+                "Error, failed to load model file: {}. Error: {}.".format(model_path, e)
+            )
 
     def save_model(self, model_path: str) -> None:
-        self._model.save_model(model_path)
+        try:
+            self._model.save_model(model_path)
+        except Exception as e:
+            print(
+                "Error, failed to save model at: {}. Error: {}.".format(model_path, e)
+            )
 
     def train(self, tr_data_fname: str) -> None:
         self._model = fasttext.train_supervised(
