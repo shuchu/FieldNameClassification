@@ -58,6 +58,6 @@ if __name__ == "__main__":
         res[field_name]["normalized_distance"] = dist_score
 
     # save results
-    ofname = query_field_name_fname + ".json"
+    ofname = query_field_name_fname + "_dist.json"
     with open(ofname, "w") as f:
         json.dump(res, f)
