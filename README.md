@@ -3,7 +3,7 @@
 Classify the field type of a given field name based on an existing knowledge.
 
 
-## Example usage:
+## Example usage of distance based classifier:
 
     from distance_based_fn_classifier import DistanceFieldNameClassifier
 
@@ -19,7 +19,7 @@ The type of "fts" is a list since a single field_name can be mapped to different
 
 ## Run demo
 
-    python3 demo.py ./tests/knowledge_dic.json  test_field_names.txt
+    python3 demo.py ./tests/knowledge_dict.json  test_field_names.txt
 
 
 The example output is:
@@ -84,3 +84,64 @@ The example output is:
 }
 ```
 
+## Example usage of fasttext based classifier:
+    from fasttext_fn_classifier import FTClassifier
+
+    myclassifier = FTClassifier(0.5)
+    myclassifier.train(knowledge_dict_tr_fname)
+
+    ft = myclassifier.predict_field_type(field_name)
+
+The value 0.5 means the minimum probability. It's the confidence about fasttext's prediction.  
+
+The value ft is a list of field type. And only one field type will be returned even the return type is a Python list.
+
+
+## run demo 
+    python3 demo.py ./tests/knowledge_dict_tr.txt  test_field_names.txt
+
+(Possible) output is:
+```json
+{
+    "source_ip": {
+        "field_types": [
+            "IPv4Address"
+        ]
+    },
+    "sourec_ip": {
+        "field_types": [
+            "IPv4Address"
+        ]
+    },
+    "abcdef_ip": {
+        "field_types": [
+            "IPv4Address"
+        ]
+    },
+    "domain_name": {
+        "field_types": [
+            "ProcessName"
+        ]
+    },
+    "WindowsDomain": {
+        "field_types": [
+            "Domain"
+        ]
+    },
+    "dst_port": {
+        "field_types": [
+            "Domain"
+        ]
+    },
+    "ip": {
+        "field_types": [
+            "IPv4Address"
+        ]
+    },
+    "endpoint": {
+        "field_types": [
+            "Domain"
+        ]
+    }
+}
+```
