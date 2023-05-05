@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-
+import sys
+sys.path.append(".")
 import json
 from collections import defaultdict
 
@@ -25,7 +26,6 @@ for ft in kd:
 tr_data = []  # list of list
 
 mytokenizer = Tokenizer()
-
 for fn in inverse_map:
     r = []
     # Add field type
@@ -34,14 +34,9 @@ for fn in inverse_map:
 
     fn_tokens = mytokenizer.extract_tokens(fn)
     r.extend(fn_tokens)
-
-    print(r)
-
     tr_data.append(r)
 
 # write to txt file
-print(tr_data)
-
 with open('knowledge_dict_tr.txt', 'w') as f:
     for r in tr_data:
         f.write("{}\n".format(" ".join(r)))
