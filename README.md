@@ -12,7 +12,7 @@ Classify the field type of a given field name based on an existing knowledge.
 
     fts = myclassifier.predict_field_type(field_name)
 
-The value 0.5 is a tunable threshold. Its value ranges from [0.0, 1.0], where value 1.0 will return the most similary field name of the querying field_name from the pre-defined dictionary.  
+The value 0.5 is a tunable threshold. Its value ranges from [0.0, 1.0], where value 1.0 will return the most similary field name from the pre-defined dictionary and doesn't care about the results are make sense or not. And value 0.0 will only return the exact matched ones.  
 
 The type of "fts" is a list since a single field_name can be mapped to different field types.
 
