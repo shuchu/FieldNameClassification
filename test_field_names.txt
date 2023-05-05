@@ -5,4 +5,4 @@ domain_name
 WindowsDomain
 dst_port
 ip
- 
+endpoint
