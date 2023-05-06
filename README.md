@@ -2,6 +2,11 @@
 
 Classify the field type of a given field name based on an existing knowledge.
 
+List of files:
+- distance_based_fn_classifier.py:  a classifier based on the Damerau-evenshtein distance. It has O(n) complexity.
+- fasttext-fn-classifier.py: a classifier based on the FastText embedding.
+- tokenizer.py:  it includes the tokenize function for FastText embedding. All non-Englisth and non-digits characters will be removed. the output will be all lowercase, and the order of the original word is preserved. 
+
 
 ## Example usage of distance based classifier:
 
@@ -98,6 +103,8 @@ The value ft is a list of field type. And only one field type will be returned e
 
 
 ## run demo 
+    // generate training data
+    python3 scratch/process_kd.py
     python3 demo.py ./tests/knowledge_dict_tr.txt  test_field_names.txt
 
 (Possible) output is:
